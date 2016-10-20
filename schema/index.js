@@ -1,25 +1,34 @@
 const {
-	GraphQLSchema,
-	GraphQLObjectType,
-	GraphQLString
-	} = require('graphql');
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLNonNull
+} = require('graphql');
 
-//The root query type is where we ask questions
+const pgdb = require('../database/pgdb');
+const MeType = require('./types/me');
+
 const RootQueryType = new GraphQLObjectType({
-	name: 'RootQueryType',
+  name: 'RootQueryType',
 
-	fields: {
-		hello: {
-			type: GraphQLString,
-			description: 'Description of the *GraphQL* example',
-			resolve: () => 'world'
-		}
-	}
+  fields: {
+    me: {
+      type: MeType,
+      description: 'The current user identified by an api key',
+      args: {
+        key: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve: (obj, args, { pgPool }) => {
+        //{PgPool} distracturing argument equivalent of ctx.PgPool
+        return pgdb(pgPool).getUser(args.key);
+      }
+    }
+  }
 });
 
 
-const ncSchema =  new GraphQLSchema({
-		query: RootQueryType
+const ncSchema = new GraphQLSchema({
+  query: RootQueryType
 });
 
 

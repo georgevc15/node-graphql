@@ -11,6 +11,7 @@ const RootQueryType = new GraphQLObjectType({
 	fields: {
 		hello: {
 			type: GraphQLString,
+			description: 'Description of the *GraphQL* example',
 			resolve: () => 'world'
 		}
 	}

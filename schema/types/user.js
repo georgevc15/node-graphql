@@ -12,7 +12,7 @@ const mdb = require('../../database/mdb');
 const ContestType = require('./contest');
 
 module.exports = new GraphQLObjectType({
-  name: 'MeType',
+  name: 'UserType',
 
   fields: {
     id: { type: GraphQLID },
@@ -48,6 +48,5 @@ module.exports = new GraphQLObjectType({
         return mdb(mPool).getCounts(obj, fieldName);
       }
     }
-
   }
 });

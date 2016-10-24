@@ -1,3 +1,6 @@
-# reactjscamp/name-contests
+# install application
+npm install
 
-Clone repo then checkout a branch to start
+# run application
+npm run dev
+

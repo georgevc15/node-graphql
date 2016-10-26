@@ -1,14 +1,29 @@
 const humps = require('humps');
-
+const _ = require('lodash');
 
 module.exports = pgPool => {
+  
+  const orderedFor = (rows, collection, field) => {
+    // return the rows ordered for the collection
+    const data = humps.camelizeKeys(rows);
+    const inGroupsOfField = _.groupBy(data, field);
+      return collection.map(element => {
+        const elementArray = inGroupsOfField[element];
+        if(elementArray) {
+          return elementArray[0];
+        }
+        return {};
+      });
+  };
+
   return {
-    getUserById(userId) {
+
+    getUsersByIds(userIds) {
       return pgPool.query(`
         select * from users
-        where id = $1
-      `, [userId]).then(res => {
-        return humps.camelizeKeys(res.rows[0]);
+        where id = ANY($1)
+      `, [userIds]).then(res => {
+        return orderedFor(res.rows, userIds, 'id');
       });
     },
 

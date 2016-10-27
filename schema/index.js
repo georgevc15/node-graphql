@@ -5,7 +5,6 @@ const {
   GraphQLNonNull
 } = require('graphql');
 
-const pgdb = require('../database/pgdb');
 const UserType = require('./types/user');
 
 const RootQueryType = new GraphQLObjectType({
@@ -18,9 +17,8 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         key: { type: new GraphQLNonNull(GraphQLString) }
       },
-      resolve: (obj, args, { pgPool }) => {
-        //{PgPool} distracturing argument equivalent of ctx.PgPool
-        return pgdb(pgPool).getUserByApiKey(args.key);
+      resolve: (obj, args, { loaders }) => {
+        return loaders.usersByApiKeys.load(args.key);
       }
     }
   }

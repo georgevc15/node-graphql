@@ -11,5 +11,4 @@ module.exports = new GraphQLObjectType({
 		up: { type: GraphQLInt },
 		down: { type: GraphQLInt }
 	})
-
 });

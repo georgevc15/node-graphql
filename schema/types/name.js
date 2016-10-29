@@ -25,7 +25,7 @@ module.exports = new GraphQLObjectType({
       totalVotes: {
         type: TotalVotes,
         resolve(obj, args, { loaders }) {
-          return loaders.TotalVotesByName.load(obj.id);
+          return loaders.TotalVotesByNameIds.load(obj.id);
         }
       }
     };

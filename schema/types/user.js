@@ -13,6 +13,7 @@ module.exports = new GraphQLObjectType({
 
   fields: () => {
     const ContestType = require('./contest');
+    const ActivityType = require('./activity');
 
    return { 
     id: { type: GraphQLID },
@@ -50,7 +51,16 @@ module.exports = new GraphQLObjectType({
           return loaders.mdb.usersByIds.load(obj.id)
               .then(res => res[fieldName]);
         }
+      },
+
+      activities: {
+        type: new GraphQLList(ActivityType),
+        resolve(obj, args, { loaders }) {
+          return loaders.activitiesForUserIds.load(obj.id);
+        }
       }
+
+
     };
   }
 });

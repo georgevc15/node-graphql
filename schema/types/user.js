@@ -7,12 +7,14 @@ const {
   GraphQLInt
 } = require('graphql');
 
-const ContestType = require('./contest');
 
 module.exports = new GraphQLObjectType({
   name: 'UserType',
 
-  fields: {
+  fields: () => {
+    const ContestType = require('./contest');
+
+   return { 
     id: { type: GraphQLID },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
@@ -47,7 +49,8 @@ module.exports = new GraphQLObjectType({
       resolve(obj, args, { loaders }, { fieldName }) {
           return loaders.mdb.usersByIds.load(obj.id)
               .then(res => res[fieldName]);
+        }
       }
-    }
+    };
   }
 });

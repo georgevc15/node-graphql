@@ -8,9 +8,9 @@ const {
 const UserType = require('./types/user');
 
 const RootQueryType = new GraphQLObjectType({
-  name: 'RootQueryType',
+  name: 'RootQuery',
 
-  fields: {
+  fields: () => ({
     me: {
       type: UserType,
       description: 'The current user identified by an api key',
@@ -21,14 +21,13 @@ const RootQueryType = new GraphQLObjectType({
         return loaders.usersByApiKeys.load(args.key);
       }
     }
-  }
+  })
 });
 
 
 const AddContestMutation = require('./mutations/add-contest');
-
 const RootMutationType = new GraphQLObjectType({
-  name: 'RootMutationType',
+  name: 'RootMutation',
 
   fields: () => ({
     AddContest: AddContestMutation

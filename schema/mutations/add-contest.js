@@ -26,4 +26,4 @@ module.exports = {
 	resolve(obj, { input }, { pgPool }) {
 		return pgdb(pgPool).addNewContest(input);
 	}
-}
+};

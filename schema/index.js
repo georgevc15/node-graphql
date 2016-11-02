@@ -26,11 +26,14 @@ const RootQueryType = new GraphQLObjectType({
 
 
 const AddContestMutation = require('./mutations/add-contest');
+const AddNameMutation = require('./mutations/add-name');
+
 const RootMutationType = new GraphQLObjectType({
   name: 'RootMutation',
 
   fields: () => ({
-    AddContest: AddContestMutation
+    AddContest: AddContestMutation,
+    AddName: AddNameMutation
   })
 
 })
